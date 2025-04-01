@@ -31,6 +31,9 @@ def generate_pyramid(n,char:str='*'):
      #####
     #######
     """
+    # print(f'[DEBUG] : {n=},{char=}') # Debug statement to check the values of n and char
+
+    # checkings
     if n<1 or n>20:
         raise ValueError('n must be between 1 and 20')
     if type(n) != int:
@@ -38,6 +41,7 @@ def generate_pyramid(n,char:str='*'):
     if len(char) != 1 and char not in ['\'','\"']:
         raise ValueError('char must be a single character')
     
+    # print the pyramid, centered
     for i in range(1,n+1):
         chars = char * (2 * i - 1)
         spaces = ' ' * (n - i)
