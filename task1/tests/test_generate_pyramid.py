@@ -3,12 +3,24 @@ from io import StringIO
 from contextlib import redirect_stdout
 from generate_pyramid import generate_pyramid
 
+# Given test cases
+@pytest.mark.parametrize("height, char, expected_output", [
+    (5,"*", "    *    \n   ***   \n  *****  \n ******* \n*********\n"),
+    (3, '#', "  #  \n ### \n#####\n"),
+])
+def test_generate_pyramid_given(height, char, expected_output):
+    f = StringIO()
+    with redirect_stdout(f):
+        generate_pyramid(height, char)
+    assert f.getvalue() == expected_output
+
+
 # Basic Valid cases
 @pytest.mark.parametrize("height, char, expected_output", [
     (3, '*', "  *  \n *** \n*****\n"),
-    (3, '#', "  #  \n ### \n#####\n"),
+    (2, '#', " # \n###\n"),
 ])
-def test_generate_pyramid(height, char, expected_output):
+def test_generate_pyramid_valid(height, char, expected_output):
     f = StringIO()
     with redirect_stdout(f):
         generate_pyramid(height, char)
@@ -17,6 +29,8 @@ def test_generate_pyramid(height, char, expected_output):
 # invalid heights
 @pytest.mark.parametrize("height, char, expected_error", [
     (0, '', ValueError),
+    (0, 'A', ValueError),
+    (-1, '', ValueError),
     (-1, 'A', ValueError),
     (21, 'A', ValueError),
     (3.14, 'A', TypeError),
