@@ -1,6 +1,4 @@
-
-
-def generate_pyramid(n,char:str='*'):
+def generate_pyramid(n, char: str = "*"):
     """
     Prints a pyramid of characters, by default, asterisks (*) of height n.
 
@@ -34,21 +32,21 @@ def generate_pyramid(n,char:str='*'):
     # print(f'[DEBUG] : {n=},{char=}') # Debug statement to check the values of n and char
 
     # checkings
-    if n<1 or n>20:
-        raise ValueError('n must be between 1 and 20')
+    if n < 1 or n > 20:
+        raise ValueError("n must be between 1 and 20")
     if type(n) != int:
-        raise TypeError('n must be an integer')
-    if len(char) != 1 and char not in ['\'','\"']:
-        raise ValueError('char must be a single character')
-    
-    # print the pyramid, centered
-    for i in range(1,n+1):
-        chars = char * (2 * i - 1)
-        spaces = ' ' * (n - i)
-        print(spaces + chars + spaces)
-        
+        raise TypeError("n must be an integer")
+    if len(char) != 1 and char not in ["'", '"']:
+        raise ValueError("char must be a single character")
 
-if __name__ == '__main__':
+    # print the pyramid, centered
+    for i in range(1, n + 1):
+        chars = char * (2 * i - 1)
+        spaces = " " * (n - i)
+        print(spaces + chars + spaces)
+
+
+if __name__ == "__main__":
     generate_pyramid(5)
-    generate_pyramid(3,'#')
-    generate_pyramid(10,'@')
+    generate_pyramid(3, "#")
+    generate_pyramid(10, "@")
