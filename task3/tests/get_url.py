@@ -9,14 +9,47 @@ import random
 
 
 def get_random_str():
+    """
+    Generates a random float as a string with 16 decimal places.
+
+    Returns
+    -------
+    str
+        A string representation of a random float between 0 and 1,
+        formatted to 16 decimal places.
+    """
+
     return f"{random.random():.16f}"
 
 
 def get_stock_code():
+    """
+    Returns the stock code for the Shenzhen Stock Exchange Index (SZSE Composite Index)
+    which is '000001' under the test context.
+
+    Returns
+    -------
+    str
+        The stock code as a string.
+    """
     return "000001"
 
 
 def get_api_urls():
+    """
+    Returns a list of URLs for the Shenzhen Stock Exchange API to retrieve historical
+    data for the Shenzhen Stock Exchange Index (SZSE Composite Index) with different
+    frequencies.
+
+    The URLs are constructed by calling `get_random_str`, `get_stock_code`, and
+    generating URLs for cycle types 34 (monthly), 33 (weekly), and 32 (daily).
+
+    Returns
+    -------
+    list
+        A list of URLs as strings. / list[str]
+    """
+
     return [
         f"https://www.szse.cn/api/market/ssjjhq/getHistoryData?random={get_random_str()}&cycleType={cycleId}&marketId=1&code={get_stock_code()}&language=EN"
         for cycleId in ["34", "33", "32"]
