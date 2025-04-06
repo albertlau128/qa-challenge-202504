@@ -5,15 +5,19 @@
 # code is the stock code for which the data is being requested, in this case, '000001' which is the stock code for the Shenzhen Stock Exchange Index (SZSE Composite Index) required
 # Example:
 # api_url = 'https://www.szse.cn/api/market/ssjjhq/getHistoryData?random=0.6332035049957934&cycleType=34&marketId=1&code=000001&language=EN'
-import random 
+import random
+
+
 def get_random_str():
     return f"{random.random():.16f}"
 
+
 def get_stock_code():
-    return '000001'
+    return "000001"
+
 
 def get_api_urls():
     return [
         f"https://www.szse.cn/api/market/ssjjhq/getHistoryData?random={get_random_str()}&cycleType={cycleId}&marketId=1&code={get_stock_code()}&language=EN"
-        for cycleId in ['34', '33', '32']
+        for cycleId in ["34", "33", "32"]
     ]
