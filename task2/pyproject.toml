@@ -1,0 +1,18 @@
+[project]
+name = "task2"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Albert LAU",email = "32214383+albertlau128@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "appium-python-client (>=5.0.0,<6.0.0)",
+    "pytest (>=8.3.5,<9.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
