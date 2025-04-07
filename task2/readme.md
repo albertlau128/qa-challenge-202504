@@ -34,3 +34,21 @@ poetry init
 poetry env activate
 pytest ./tests/ -s
 ```
+
+
+
+### For future reference
+- To use inspector, run `appium --use-plugins=inspector --allow-cors` and reach [localhost](http://localhost:4723/inspector) to begin
+  - for configuration, please use 
+  ```
+  {
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2"
+  }
+  ```
+  reference: https://appium.github.io/appium-inspector/latest/quickstart/starting-a-session/
+
+
+### Backlog
+- Enhance retry mechanism 
+- Add further assertions to ensure capture unexpected events/jump/prod popups
