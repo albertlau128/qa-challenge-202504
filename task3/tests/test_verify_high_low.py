@@ -64,7 +64,10 @@ def test_verify_response_picupdata():
                     day_stock_data,
                 )
             )  # creating a data dictionary for further usage if test of other values are needed
-
+            
+            # debug print the data dictionary
+            print(f"{data=}")
+                
             # Check if the high price is greater than or equal to the low price
             assert float(data["high"]) >= float(
                 data["low"]
