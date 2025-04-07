@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
 import time
+import re
 import unittest
+
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 from appium.webdriver.common.appiumby import AppiumBy
 
-# from appium.webdriver.common.touch_action import TouchAction
-import re
 
 capabilities = dict(
     platformName="Android",
@@ -16,11 +16,12 @@ capabilities = dict(
     # appActivity='hko.homepage3.HomepageActivity', # disabled since will cause appium to crash and not able to start the app
     autoGrantPermissions=True,
     autoAcceptAlerts=True,
-    # noReset= True,
+    # noReset= True, # do not reset app state before test, so that we can test the app from the start
 )
 
 # appPackage = 'hko.MyObservatory_v1_0'
 appium_server_url = "http://localhost:4723"
+swipe_duration = 700
 
 
 def _calculate_swipe_coordinates(d, start_ratio, stop_ratio, is_vertical=True):
@@ -40,9 +41,6 @@ def _calculate_swipe_coordinates(d, start_ratio, stop_ratio, is_vertical=True):
         stop_y = start_y
 
     return start_x, start_y, stop_x, stop_y
-
-
-swipe_duration = 700
 
 
 def swipe_down(d, start_y=0.25, stop_y=0.75, duration=swipe_duration):
@@ -119,6 +117,7 @@ class TestAppium(unittest.TestCase):
     def test_hko_get_forecast_next_date(self) -> None:
         """Test to see if the first forecast in the 9-day forecast screen is for tomorrow."""
         assert self.driver is not None, "Driver is not initialized"
+        print("Starting test_hko_get_forecast_next_date...")
         # Find the element using XPath
         trials = 0
         while self.driver.current_activity != ".WeatherForecastActivity":
@@ -139,6 +138,9 @@ class TestAppium(unittest.TestCase):
             print(
                 f"Current app activity: {self.driver.current_activity}, expected `.WeatherForecastActivity`"
             )
+            # assert self.driver.current_activity == ".WeatherForecastActivity", (
+            #     "Current activity is not WeatherForecastActivity, please check the app status."
+            # )
 
             trials += 1
             if trials > 3:
@@ -187,7 +189,7 @@ class TestAppium(unittest.TestCase):
 
             if desc != "null":
                 print(f"Candidate card content desc: {desc}")
-                if re.search(r"\d{1,2} \w{3-9}\n", desc):
+                if re.search(r"\d{1,2} \w{3,}\n.*", desc):
                     date = desc.split("\n")[0]
                     print(f"Found date: {date}")
 
@@ -196,7 +198,7 @@ class TestAppium(unittest.TestCase):
                     expected_date = (
                         datetime.now()
                         + timedelta(days=1 if datetime.now().hour > 6 else 0)
-                    ).strftime("%d %b")
+                    ).strftime("%d %B")
                     print(f"Expected date: {expected_date}")
                     print(f"{desc=}")
 
@@ -205,7 +207,7 @@ class TestAppium(unittest.TestCase):
                     ), f"First forecast date is not today, expected: {expected_date}, actual: {desc}"
                     return
                 else:
-                    print(f"^^ Not a date :(, continuing...)")
+                    print(f"^^ Not a date :(, continuing...")
 
 
 if __name__ == "__main__":
